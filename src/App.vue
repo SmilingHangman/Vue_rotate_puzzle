@@ -1,13 +1,22 @@
 <template>
   <div id="app">
     <PuzzleBox class="puzzle-box" :style="backgroundImage"></PuzzleBox>
-    <BaseButton @click="fetchPicture">Get a Pic</BaseButton>
+    <div class="controls-wrapper">
+      <BaseButton @click="fetchPicture">Get a Pic</BaseButton>
+      <div class="controls-middle">
+        <PuzzleSizeInput></PuzzleSizeInput>
+        <HelperBorders></HelperBorders>
+      </div>
+      <BaseButton>Start!</BaseButton>
+    </div>
   </div>
 </template>
 
 <script>
 import PuzzleBox from '@/components/PuzzleBox'
 import BaseButton from '@/components/BaseButton'
+import PuzzleSizeInput from '@/components/PuzzleSizeInput'
+import HelperBorders from '@/components/HelperBorders'
 
 const axios = require('axios')
 
@@ -15,7 +24,9 @@ export default {
   name: 'App',
   components: {
     PuzzleBox,
-    BaseButton
+    BaseButton,
+    PuzzleSizeInput,
+    HelperBorders
   },
   data () {
     return {
@@ -51,5 +62,19 @@ export default {
    background-repeat: no-repeat;
    background-size: 335px;
    background-position: left calc(50%);
+ }
+
+ .controls-wrapper {
+   width: 335px;
+   display: flex;
+   justify-content: space-between;
+   margin-top: 20px;
+ }
+
+ .controls-middle {
+   width: 175px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
  }
 </style>
