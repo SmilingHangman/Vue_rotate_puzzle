@@ -1,13 +1,21 @@
 <template>
   <div id="app">
-    <PuzzleBox class="puzzle-box" :style="backgroundImage"></PuzzleBox>
+    <PuzzleBox class="puzzle-box" :style="backgroundImage">
+      <PuzzleCell></PuzzleCell>
+    </PuzzleBox>
+    <div
+      v-for="(row, index) in grid"
+      v-bind:key="index"
+    >
+      0
+    </div>
     <div class="controls-wrapper">
       <BaseButton @click="fetchPicture">Get a Pic</BaseButton>
       <div class="controls-middle">
-        <PuzzleSizeInput></PuzzleSizeInput>
+        <PuzzleSizeInput class="number-input"></PuzzleSizeInput>
         <HelperBorders></HelperBorders>
       </div>
-      <BaseButton>Start!</BaseButton>
+      <BaseButton @click="StartGame">Start!</BaseButton>
     </div>
   </div>
 </template>
@@ -17,27 +25,29 @@ import PuzzleBox from '@/components/PuzzleBox'
 import BaseButton from '@/components/BaseButton'
 import PuzzleSizeInput from '@/components/PuzzleSizeInput'
 import HelperBorders from '@/components/HelperBorders'
+import PuzzleCell from '@/components/PuzzleCell'
 
 const axios = require('axios')
-
 export default {
   name: 'App',
   components: {
     PuzzleBox,
     BaseButton,
     PuzzleSizeInput,
-    HelperBorders
+    HelperBorders,
+    PuzzleCell
   },
   data () {
     return {
       isRequesting: false,
       picture: String,
-      backgroundImage: ''
+      backgroundImage: '',
+      grid: [],
+      row: [],
+      cell: '',
+      size: 3
     }
   },
-  // created () {
-  //   this.fetchPicture()
-  // },
   methods: {
     async fetchPicture () {
       this.isRequesting = true
@@ -52,6 +62,9 @@ export default {
       } catch (error) {
         this.isRequesting = false
       }
+    },
+    StartGame () {
+      console.log('starting')
     }
   }
 }
@@ -62,6 +75,7 @@ export default {
    background-repeat: no-repeat;
    background-size: 335px;
    background-position: left calc(50%);
+   box-sizing: border-box;
  }
 
  .controls-wrapper {
@@ -76,5 +90,12 @@ export default {
    display: flex;
    flex-direction: column;
    justify-content: center;
+   align-items: center;
+ }
+
+ .number-input {
+   max-width: 80px;
+   text-align: center;
+   padding: 4px 0;
  }
 </style>
